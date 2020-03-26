@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import waqwa_canvas2d/canvas2dcomp
+import waqwa_canvas2d/[canvas2dcomp, canvas2dpainter]
 
-export Canvas2dComp
+export canvas2dcomp
+export Canvas2dPainter, clear
