@@ -12,11 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import waqwa_canvas2d/[
-  canvas2dcomp,
-  canvas2dpainter,
-  canvasmanager]
+import private/htmlcanvas
 
-export canvas2dcomp
-export Canvas2dPainter, canvas2dpainter.clear
-export CanvasManager, canvasmanager.width, canvasmanager.height
+type
+  CanvasManager* = ref object of RootObj
+    canvas: CanvasElement
+
+proc newCanvasManager*(canvas: CanvasElement): CanvasManager =
+  CanvasManager(canvas: canvas)
+
+
+proc width*(self: CanvasManager): Natural =
+  self.canvas.width
+
+
+proc height*(self: CanvasManager): Natural =
+  self.canvas.height

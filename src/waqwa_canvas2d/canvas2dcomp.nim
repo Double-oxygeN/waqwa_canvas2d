@@ -14,7 +14,7 @@
 
 import dom
 import scenefw
-import canvas2dpainter
+import canvas2dpainter, canvasmanager
 from private/htmlcanvas import CanvasElement
 
 type
@@ -24,10 +24,13 @@ type
   Canvas2dComp* = ref object of Component
     targetElement: Element
     width, height: Positive
+
     painter: Canvas2dPainter
+    canvas: CanvasManager
 
 
 proc painter*(self: Canvas2dComp): Canvas2dPainter = self.painter
+proc canvas*(self: Canvas2dComp): CanvasManager = self.canvas
 
 
 proc newCanvas2dComp*(targetElementId: string): Canvas2dComp =
@@ -53,6 +56,7 @@ method init(self: Canvas2dComp) =
   self.targetElement.appendChild(canvas)
 
   self.painter = newCanvas2dPainter(canvas)
+  self.canvas = newCanvasManager(canvas)
 
 
 method afterDraw(self: Canvas2dComp) =
