@@ -14,8 +14,10 @@
 
 import dom
 import scenefw
-import canvas2dpainter, canvasmanager
+import canvas2dpainter, canvasmanager, actions
 from private/htmlcanvas import CanvasElement
+
+export KeyCode, isKeyStartPressing, isKeyDown, isKeyStartReleasing, isKeyUp, keyboard
 
 type
   CanvasSize* = tuple
@@ -27,10 +29,12 @@ type
 
     painter: Canvas2dPainter
     canvas: CanvasManager
+    input: Actions
 
 
 proc painter*(self: Canvas2dComp): Canvas2dPainter = self.painter
 proc canvas*(self: Canvas2dComp): CanvasManager = self.canvas
+proc input*(self: Canvas2dComp): Actions = self.input
 
 
 proc newCanvas2dComp*(targetElementId: string): Canvas2dComp =
@@ -57,7 +61,14 @@ method init(self: Canvas2dComp) =
 
   self.painter = newCanvas2dPainter(canvas)
   self.canvas = newCanvasManager(canvas)
+  self.input = newActions(document)
+
+  self.input.init()
 
 
 method afterDraw(self: Canvas2dComp) =
   self.painter.display()
+
+
+method afterUpdate(self: Canvas2dComp) =
+  self.input.update()

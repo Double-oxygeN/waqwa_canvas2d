@@ -12,13 +12,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import waqwa_canvas2d/[
-  canvas2dcomp,
-  canvas2dpainter,
-  canvasmanager,
-  actions]
+import dom
+import actions/keyboardaction
 
-export canvas2dcomp
-export Canvas2dPainter, canvas2dpainter.clear
-export CanvasManager, canvasmanager.width, canvasmanager.height
-export Actions
+export KeyCode, isKeyStartPressing, isKeyDown, isKeyStartReleasing, isKeyUp
+
+type
+  Actions* = ref object of RootObj
+    keyboard: KeyboardAction
+
+
+proc keyboard*(self: Actions): KeyboardAction = self.keyboard
+
+
+proc newActions*(target: EventTarget): Actions =
+  Actions(keyboard: newKeyboardAction(target))
+
+
+proc init*(self: Actions) =
+  self.keyboard.init()
+
+
+proc update*(self: Actions) =
+  self.keyboard.update()
