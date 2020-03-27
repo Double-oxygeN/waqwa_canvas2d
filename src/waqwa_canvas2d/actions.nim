@@ -12,26 +12,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import dom
-import actions/keyboardaction
-
-export KeyCode, isKeyStartPressing, isKeyDown, isKeyStartReleasing, isKeyUp
+import actions/[keyboardaction, mouseaction]
+from private/htmlcanvas import CanvasElement
 
 type
   Actions* = ref object of RootObj
     keyboard: KeyboardAction
+    mouse: MouseAction
 
 
 proc keyboard*(self: Actions): KeyboardAction = self.keyboard
+proc mouse*(self: Actions): MouseAction = self.mouse
 
 
-proc newActions*(target: EventTarget): Actions =
-  Actions(keyboard: newKeyboardAction(target))
+proc newActions*(target: CanvasElement): Actions =
+  Actions(
+    keyboard: newKeyboardAction(),
+    mouse: newMouseAction(target))
 
 
 proc init*(self: Actions) =
   self.keyboard.init()
+  self.mouse.init()
 
 
 proc update*(self: Actions) =
   self.keyboard.update()
+  self.mouse.update()

@@ -61,12 +61,11 @@ type
     f13, f14, f15, f16, f17, f18, f19, f20, f21, f22, f23, f24
 
   KeyboardAction* = ref object
-    target: EventTarget
     keyState: array[KeyCode, KeyState]
 
 
-proc newKeyboardAction*(target: EventTarget): KeyboardAction =
-  KeyboardAction(target: target)
+proc newKeyboardAction*: KeyboardAction =
+  new KeyboardAction
 
 
 proc init*(self: KeyboardAction) =
@@ -80,7 +79,7 @@ proc init*(self: KeyboardAction) =
   for key in KeyCode:
     self.keyState[key] = KeyState.up
 
-  self.target.addEventListener("keydown") do (ev: Event):
+  window.addEventListener("keydown") do (ev: Event):
     ev.preventDefault()
     let
       keyEv = ev.KeyboardEvent
@@ -89,7 +88,7 @@ proc init*(self: KeyboardAction) =
     if self.keyState[keyCode] != KeyState.down:
       self.keyState[keyCode] = KeyState.startPress
 
-  self.target.addEventListener("keyup") do (ev: Event):
+  window.addEventListener("keyup") do (ev: Event):
     ev.preventDefault()
     let
       keyEv = ev.KeyboardEvent

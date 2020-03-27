@@ -17,8 +17,6 @@ import scenefw
 import canvas2dpainter, canvasmanager, actions
 from private/htmlcanvas import CanvasElement
 
-export KeyCode, isKeyStartPressing, isKeyDown, isKeyStartReleasing, isKeyUp, keyboard
-
 type
   CanvasSize* = tuple
     width, height: Positive
@@ -61,7 +59,7 @@ method init(self: Canvas2dComp) =
 
   self.painter = newCanvas2dPainter(canvas)
   self.canvas = newCanvasManager(canvas)
-  self.input = newActions(document)
+  self.input = newActions(canvas)
 
   self.input.init()
 

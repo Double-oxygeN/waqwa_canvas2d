@@ -17,8 +17,13 @@ import waqwa_canvas2d/[
   canvas2dpainter,
   canvasmanager,
   actions]
+import waqwa_canvas2d/actions/[keyboardaction, mouseaction]
 
 export canvas2dcomp
 export Canvas2dPainter, canvas2dpainter.clear
 export CanvasManager, canvasmanager.width, canvasmanager.height, requestFullscreen, exitFullscreen
-export Actions
+export Actions, keyboard, mouse
+export KeyboardAction, KeyCode, isKeyStartPressing, isKeyDown, isKeyStartReleasing, isKeyUp
+export MouseAction, MouseButton, mouseaction.x, mouseaction.y, isInTarget,
+  isButtonStartClick, isButtonDown, isButtonStartReleasing, isButtonUp,
+  mouseButtonLeft, mouseButtonMiddle, mouseButtonRight
