@@ -20,5 +20,5 @@ import waqwa_canvas2d/[
 
 export canvas2dcomp
 export Canvas2dPainter, canvas2dpainter.clear
-export CanvasManager, canvasmanager.width, canvasmanager.height
+export CanvasManager, canvasmanager.width, canvasmanager.height, requestFullscreen, exitFullscreen
 export Actions
