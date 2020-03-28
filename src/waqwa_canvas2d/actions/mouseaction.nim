@@ -75,6 +75,12 @@ proc init*(self: MouseAction) =
     self.x = ((mouseEv.clientX.toFloat() - targetRect.left) / scale).toInt()
     self.y = ((mouseEv.clientY.toFloat() - targetRect.top) / scale).toInt()
 
+  self.target.addEventListener($DomEvent.MouseEnter) do (ev: Event):
+    self.isInTarget = true
+
+  self.target.addEventListener($DomEvent.MouseLeave) do (ev: Event):
+    self.isInTarget = false
+
 
 proc update*(self: MouseAction) =
   for button in MouseButton:
