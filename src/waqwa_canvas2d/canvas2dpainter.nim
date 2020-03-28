@@ -25,8 +25,11 @@ type
 proc newCanvas2dPainter*(canvas: CanvasElement): Canvas2dPainter =
   result = Canvas2dPainter(
     canvas: canvas,
-    bitmapRenderer: canvas.getBitmapRendererContext(),
-    ctx: document.createElement("canvas").CanvasElement.getContext2d())
+    bitmapRenderer: canvas.getBitmapRendererContext())
+  let offscreenCanvas = document.createElement("canvas").CanvasElement
+  offscreenCanvas.width = canvas.width
+  offscreenCanvas.height = canvas.height
+  result.ctx = offscreenCanvas.getContext2d()
 
 
 proc display*(self: Canvas2dPainter) =
