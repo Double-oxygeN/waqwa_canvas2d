@@ -11,4 +11,4 @@ backend       = "js"
 # Dependencies
 
 requires "nim >= 1.0.6"
-requires "scenefw >= 0.1"
+requires "scenefw >= 0.2.1"

@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import dom, asyncjs
+from scenefw import WaqwaDrawEffect
 import private/htmlcanvas
 
 type
@@ -41,7 +42,26 @@ proc display*(self: Canvas2dPainter) =
   discard display0()
 
 
+{.push tags: [WaqwaDrawEffect].}
+
 proc clear*(self: Canvas2dPainter; color: string = "#000") =
   ## Clear the canvas with filling the color.
   self.ctx.fillStyle = color
   self.ctx.fillRect(0, 0, self.canvas.width, self.canvas.height)
+
+
+proc drawImage*(self: Canvas2dPainter; image: ImageBitmap; x, y: int | float) =
+  ## Draw an image.
+  self.ctx.drawImage(image, x, y)
+
+proc drawImage*(self: Canvas2dPainter; image: ImageBitmap; x, y, width, height: int | float) =
+  ## Draw an image.
+  self.ctx.drawImage(image, x, y, width, height)
+
+proc drawImage*(self: Canvas2dPainter; image: ImageBitmap; sx, sy, swidth, sheight, dx, dy, dwidth, dheight: int | float) =
+  ## Draw an image.
+  self.ctx.drawImage(image, sx, sy, swidth, sheight, dx, dy, dwidth, dheight)
+
+
+
+{.pop.}
