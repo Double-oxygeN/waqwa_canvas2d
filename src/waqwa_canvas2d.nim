@@ -21,7 +21,7 @@ import waqwa_canvas2d/[
 import waqwa_canvas2d/actions/[keyboardaction, mouseaction]
 
 export canvas2dcomp
-export Canvas2dPainter, canvas2dpainter.clear, drawImage
+export Canvas2dPainter, canvas2dpainter.clear, drawImage, canvas2dpainter.rect, canvas2dpainter.circle, canvas2dpainter.ellipse, canvas2dpainter.fill, canvas2dpainter.stroke
 export CanvasImageManager, addImage, addSprite, getImage, canvasimagemanager.load, canvasimagemanager.progress
 export CanvasManager, canvasmanager.width, canvasmanager.height, requestFullscreen, exitFullscreen
 export Actions, keyboard, mouse

@@ -15,12 +15,17 @@
 import dom, asyncjs
 from scenefw import WaqwaDrawEffect
 import private/htmlcanvas
+from math import TAU
 
 type
   Canvas2dPainter* = ref object of RootObj
     canvas: CanvasElement
     bitmapRenderer: ImageBitmapRenderingContext
     ctx: CanvasRenderingContext2d ## not related to canvas property
+
+  Canvas2dPath* = ref object of RootObj
+    path: Path2D
+    ctx: CanvasRenderingContext2d
 
 
 proc newCanvas2dPainter*(canvas: CanvasElement): Canvas2dPainter =
@@ -42,8 +47,6 @@ proc display*(self: Canvas2dPainter) =
   discard display0()
 
 
-{.push tags: [WaqwaDrawEffect].}
-
 proc clear*(self: Canvas2dPainter; color: string = "#000") =
   ## Clear the canvas with filling the color.
   self.ctx.fillStyle = color
@@ -63,5 +66,37 @@ proc drawImage*(self: Canvas2dPainter; image: ImageBitmap; sx, sy, swidth, sheig
   self.ctx.drawImage(image, sx, sy, swidth, sheight, dx, dy, dwidth, dheight)
 
 
+proc newCanvas2dPath(self: Canvas2dPainter): Canvas2dPath {.inline.} =
+  Canvas2dPath(path: newPath2D(), ctx: self.ctx)
 
-{.pop.}
+
+proc rect*(self: Canvas2dPainter; x, y, width, height: int | float): Canvas2dPath =
+  ## Create a rectangle path.
+  result = self.newCanvas2dPath()
+  result.path.rect(x, y, width, height)
+
+
+proc circle*(self: Canvas2dPainter; x, y, radius: int | float): Canvas2dPath =
+  ## Create a circle path.
+  result = self.newCanvas2dPath()
+  result.path.arc(x, y, radius, 0, TAU)
+
+
+proc ellipse*(self: Canvas2dPainter; x, y, radiusX, radiusY: int | float; rotation: float = 0.0): Canvas2dPath =
+  ## Create an ellipse path.
+  result = self.newCanvas2dPath()
+  result.path.ellipse(x, y, radiusX, radiusY, rotation, 0, TAU)
+
+
+# Path operations.
+
+proc fill*(path: Canvas2dPath; color: string = "") =
+  ## Fill the path.
+  if color != "": path.ctx.fillStyle = color
+  path.ctx.fill(path.path)
+
+
+proc stroke*(path: Canvas2dPath; color: string = "") =
+  ## Stroke the path.
+  if color != "": path.ctx.strokeStyle = color
+  path.ctx.stroke(path.path)
